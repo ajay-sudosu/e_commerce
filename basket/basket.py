@@ -18,11 +18,11 @@ class Basket:
         Adding and updating the user basket session data
         """
         product_id = product.id
-        if product_id not in self.basket:
+        if str(product_id) not in self.basket:
             self.basket[product_id] = {"price": str(product.price),
                                        'qty': int(productqty)}
         else:
-            self.basket[product_id]["qty"] += int(productqty)
+            self.basket[str(product_id)]["qty"] += int(productqty)
         self.session.modified = True  # tells django that I have modified session now you can save it
 
     def __len__(self):
