@@ -4,10 +4,14 @@ from django.http import JsonResponse
 from basket.context_processors import Basket
 from store.models import Product
 
+#
+# def basket_summary(request):
+#     basket = Basket(request)
+#     return render(request, 'basket/summary.html', context={'basket': basket})
+
 
 def basket_summary(request):
-    basket = Basket(request)
-    return render(request, 'basket/summary.html', context={'basket': basket})
+    return render(request, 'basket/summary.html')
 
 
 def basket_add(request):
@@ -27,15 +31,19 @@ def basket_delete(request):
     if request.POST.get("action") == 'delete':
         product_id = request.POST.get("productid")
         basket.delete(product=product_id)
-        response = JsonResponse({"Success": True})
+        basketqty = len(basket)
+        basket_total = basket.get_total_price()
+        response = JsonResponse({'qty': basketqty, 'subtotal': basket_total})
         return response
 
 
 def basket_update(request):
     basket = Basket(request)
     if request.POST.get("action") == 'update':
-        product_id = request.POST.get("productid")
-        productqty = request.POST.get("productqty")
+        product_id = int(request.POST.get("productid"))
+        productqty = int(request.POST.get("productqty"))
         basket.update(product=product_id, productqty=productqty)
-        response = JsonResponse({"Success": True})
+        basketqty = len(basket)
+        basket_total = basket.get_total_price()
+        response = JsonResponse({'qty': basketqty, 'subtotal': basket_total})
         return response

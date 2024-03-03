@@ -7,6 +7,7 @@ class Basket:
    A base Basket class, providing some default behaviors that
    can be inherited or override, as necessary.
    """
+    BASKET_PRICE = 0
 
     def __init__(self, request):
         self.session = request.session
@@ -55,7 +56,7 @@ class Basket:
         """
         Update item in session data.
         """
-        product_id = product
+        product_id = str(product)
         if product_id in self.basket:
             self.basket[product_id]["qty"] = int(productqty)
         self.save()
@@ -67,7 +68,11 @@ class Basket:
         """
         Get the basket data and count the item
         """
-        return sum(item["qty"] for item in self.basket.values())
+        # total = 0
+        # for item in self.basket.values():
+        #     total += item["qty"]
+        # return sum(item["qty"] for item in self.basket.values())
+        return len(self.basket)
 
     def get_total_price(self):
         return sum(Decimal(item['price']) * item['qty'] for item in self.basket.values())
