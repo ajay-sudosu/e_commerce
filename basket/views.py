@@ -6,8 +6,8 @@ from store.models import Product
 
 
 def basket_summary(request):
-    data = request.session.get("skey")
-    return render(request, 'basket/summary.html')
+    basket = Basket(request)
+    return render(request, 'basket/summary.html', context={'basket': basket})
 
 
 def basket_add(request):
@@ -16,10 +16,26 @@ def basket_add(request):
         product_id = int(request.POST.get("productid"))
         productqty = int(request.POST.get("productqty"))
         product = get_object_or_404(Product, id=product_id)
-        try:
-            basket.add(product, productqty)
-            basketqty = basket.__len__()
-        except Exception as e:
-            print(e)
+        basket.add(product, productqty)
+        basketqty = len(basket)
         response = JsonResponse({'qty': basketqty})
+        return response
+
+
+def basket_delete(request):
+    basket = Basket(request)
+    if request.POST.get("action") == 'delete':
+        product_id = request.POST.get("productid")
+        basket.delete(product=product_id)
+        response = JsonResponse({"Success": True})
+        return response
+
+
+def basket_update(request):
+    basket = Basket(request)
+    if request.POST.get("action") == 'update':
+        product_id = request.POST.get("productid")
+        productqty = request.POST.get("productqty")
+        basket.update(product=product_id, productqty=productqty)
+        response = JsonResponse({"Success": True})
         return response
