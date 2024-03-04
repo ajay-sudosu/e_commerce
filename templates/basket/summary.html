@@ -25,7 +25,7 @@
 
               <div class="col-6 text-end">
                 <span class="h6 fw-bold">Sub total:</span><br>
-                <span class="h6 fw-bold" id="item_subtotal_price{{product.id}}">Rs.{{ item.total_price }}</span>
+                <span class="h6 fw-bold sub_total" data-index="{{product.id}}">Rs.{{ item.total_price }}</span>
               </div>
               <div class="col-">
                 <span class="h6 fw-bold">Price per item:</span>
@@ -108,7 +108,10 @@
         success: function (json) {
         document.getElementById("basket-qty").innerHTML = json.qty
         document.getElementById("subtotal").innerHTML = json.subtotal
-        console.log("item_subtotal_price" + "prodid")
+        var itemsubtotalprice = json.item_subtotal_price;
+        console.log(itemsubtotalprice)
+        console.log(prodid)
+        $('span.h6.fw-bold.sub_total[data-index="' + prodid + '"]').text(itemsubtotalprice);
         },
         error: function (xhr, errmsg, err) {
         }
