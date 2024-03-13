@@ -12,3 +12,33 @@ class RegistrationForm(forms.ModelForm):
     class Meta:
         model = UserBase
         fields = ('user_name', 'email')
+
+    def clean_user_name(self):
+        user_name = self.cleaned_data["user_name"].lower()
+        data = UserBase.objects.filter(user_name=user_name)
+        if data.count():
+            raise forms.ValidationError("Username already exists.")
+        return user_name
+
+    def clean_password2(self):
+        data = self.cleaned_data
+        if data["password"] != data["password2"]:
+            raise forms.ValidationError("Password does not match.")
+        return data["password2"]
+
+    def clean_email(self):
+        data = self.cleaned_data
+        if UserBase.objects.filter(email=data["email"]).exists():
+            raise forms.ValidationError("Email already in use.")
+        return data["email"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['user_name'].widget.attrs.update(
+            {'class': 'form-control mb-3', 'placeholder': 'Username'})
+        self.fields['email'].widget.attrs.update(
+            {'class': 'form-control mb-3', 'placeholder': 'E-mail', 'name': 'email', 'id': 'id_email'})
+        self.fields['password'].widget.attrs.update(
+            {'class': 'form-control mb-3', 'placeholder': 'Password'})
+        self.fields['password2'].widget.attrs.update(
+            {'class': 'form-control', 'placeholder': 'Repeat Password'})

@@ -2,6 +2,19 @@
 {% block title %}Log In{% endblock %}
 {% block content %}
 
+<style>
+    .account-form input {
+        border: 2px solid #ccc;
+        height: calc(2em + .75rem + 2px);
+    }
+
+    .account-form input:focus {
+        border-color: #1497ff;
+        box-shadow: none;
+    }
+</style>
+
+
 <div class="container-fluid" xmlns:account="http://www.w3.org/1999/xhtml">
     <div class="row no-gutter">
         <div class="col-md-12">

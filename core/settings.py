@@ -37,8 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'account',
     'store',
-    'basket'
+    'basket',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +136,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # settings for media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# Custom user model
+# Need to use this otherwise django will be confused because it will try to use this from its own User model
+AUTH_USER_MODEL = "account.UserBase"
+LOGIN_REDIRECT_URL = '/account/dashboard'
+LOGIN_URL = '/account/login/'
+
+# Email Setting
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
