@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, PermissionsMixin, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.utils.translation import gettext as _
 from django_countries.fields import CountryField
 
@@ -28,7 +28,7 @@ class CustomUserManager(BaseUserManager):
         return user
 
 
-class UserBase(AbstractUser, PermissionsMixin):
+class UserBase(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email_address'), unique=True)
     user_name = models.CharField(max_length=150, blank=True)
     about = models.CharField(_('about'), max_length=150, blank=True)
