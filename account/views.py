@@ -30,7 +30,7 @@ def account_register(request):
             # set up email
             current_site = get_current_site(request)
             subject = "Activate your account"
-            email_template_location = '/account/registration/account_activation_email.html'
+            email_template_location = 'account/registration/account_activation_email.html'
             message = render_to_string(email_template_location,
                                        {'user': user,
                                         'domain': current_site.domain,
@@ -53,6 +53,6 @@ def account_activate(request, uidb64, token):
             login(request, user)
             return redirect("account:dashboard")
         else:
-            return render(request, 'account/registration.activation_invalid.html')
+            return render(request, 'account/registration/activation_invalid.html')
     except Exception as e:
         print(e)
