@@ -18,6 +18,6 @@ urlpatterns = [
     path('dashboard/', dashboard, name='dashboard'),
     path('profile/edit/', edit_details, name='edit_details'),
     path('profile/delete_user/', delete_user, name='delete_user'),
-    path('profile/delete_confirm/', TemplateView.as_view(templacte_name='account/user/delete_confirm.html'),
+    path('profile/delete_confirm/', TemplateView.as_view(template_name='account/user/delete_confirm.html'),
          name='delete_confirm'),
     path('activate/<slug:uidb64>/<slug:token>/', account_activate, name='activate'), ]
