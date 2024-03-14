@@ -33,7 +33,7 @@ def delete_user(request):
     user.is_active = False
     user.save()
     logout(request)
-    return redirect('account:delete_confirmation')
+    return redirect('account:delete_confirm')
 
 
 def account_register(request):
