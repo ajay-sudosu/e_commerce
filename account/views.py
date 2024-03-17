@@ -24,7 +24,7 @@ def edit_details(request):
             user_form.save()
     else:
         user_form = UserEditForm(instance=request.user)
-        return render(request, 'account/user/edit_details.html', {'user_form': user_form})
+    return render(request, 'account/user/edit_details.html', {'user_form': user_form})
 
 
 @login_required()
