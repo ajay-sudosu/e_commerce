@@ -3,3 +3,4 @@ pillow==10.2.0
 mysqlclient-2.1.1
 django-countrie==7.5.1
 six==1.16.0
+stripe==8.7.0
