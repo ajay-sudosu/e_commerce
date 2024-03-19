@@ -41,7 +41,6 @@ var custAdd = document.getElementById("custAdd").value;
 var custAdd2 = document.getElementById("custAdd2").value;
 var postCode = document.getElementById("postCode").value;
 
-
 $.ajax({
 type: "POST",
 url: 'http://127.0.0.1:8000/orders/add/',
@@ -61,7 +60,7 @@ success: function (json) {
             line1:custAdd,
             line2:custAdd2
         },
-        name: custName
+        name: custName,
       },
     }
   }).then(function(result) {

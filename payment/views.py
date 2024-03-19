@@ -16,10 +16,16 @@ def basket_view(request):
     total = int(total.replace(".", ''))
     stripe.api_key = 'sk_test_51OviijSGt255RwNS7NzN0rV4iqHxxBqI7leB0rHo7CZ3xPLWrnla78Xmvu1794fNUQms0A0jtwcZQMwlZejLgyA100sQTqDgnQ'
     intent = stripe.PaymentIntent.create(
+        description="Software development services",
+        shipping={
+            "name": "Jenny Rosen",
+        },
         amount=total,
-        currency='INR',
-        description="This is the payment",
-        metadata={'userid': request.user.id}
+        currency="usd",
+        payment_method_types=["card"],
+        metadata={
+            "user_id": request.user.id,
+        }
     )
     return render(request, 'payment/home.html', context={'client_secret': intent.client_secret})
 
